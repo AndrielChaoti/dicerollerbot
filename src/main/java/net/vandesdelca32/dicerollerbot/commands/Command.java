@@ -1,5 +1,6 @@
 package net.vandesdelca32.dicerollerbot.commands;
 
+import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ public interface Command {
         List<Command> commands = new LinkedList<>();
 
         commands.add(new Shutdown());
+        commands.add(new Leave());
 
         logger.info("Initialized {} commands.", commands.size());
         return commands;

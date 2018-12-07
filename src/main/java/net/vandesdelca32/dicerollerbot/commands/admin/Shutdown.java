@@ -6,6 +6,9 @@ import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 
+/**
+ * Command used to shutdown the bot.
+ */
 public class Shutdown
         implements Command {
 

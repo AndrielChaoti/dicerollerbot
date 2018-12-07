@@ -9,6 +9,8 @@
     <!-- Configure Discord4J logger level -->
     <logger name="sx.blah.discord.Discord4J" level="INFO"/>
 
+    <logger name="net.vandesdelca32.dicerollerbot" level="DEBUG"/>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
