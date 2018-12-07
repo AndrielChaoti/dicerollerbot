@@ -49,12 +49,11 @@ public class AnnotationListener {
             for (String name : command.names()) {
                 if (cmd[0].equals(Main.commandPrefix + name.toLowerCase())) {
                     MessageBuilder resp = new MessageBuilder(event.getClient());
-                    if(!PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
+                    if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
+                        resp.appendContent(command.exec(event.getMessage()));
+                    } else {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
-                        resp.build();
-                        return;
                     }
-                    resp.appendContent(command.exec(event.getMessage()));
                     resp.build();
                     return;
                 }
