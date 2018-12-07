@@ -52,6 +52,7 @@ public class AnnotationListener {
                     if(!PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
                         resp.build();
+                        return;
                     }
                     resp.appendContent(command.exec(event.getMessage()));
                     resp.build();
