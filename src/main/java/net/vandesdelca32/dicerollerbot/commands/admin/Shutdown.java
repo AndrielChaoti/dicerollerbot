@@ -6,12 +6,13 @@ import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 
-public class Shutdown implements Command {
+public class Shutdown
+        implements Command {
 
     @Override
     public String exec(IMessage message) {
 
-        if(!(message.getAuthor() == Main.client.getApplicationOwner())) return "Command can only be run by app owner.";
+        if (!(message.getAuthor() == Main.client.getApplicationOwner())) return "Command can only be run by app owner.";
 
         MessageBuilder messageBuilder = new MessageBuilder(Main.client);
 
@@ -26,7 +27,7 @@ public class Shutdown implements Command {
     }
 
     @Override
-    public String[] name() {
+    public String[] names() {
         return new String[]{"Shutdown"};
     }
 

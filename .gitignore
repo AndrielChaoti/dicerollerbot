@@ -147,3 +147,5 @@ $RECYCLE.BIN/
 
 ### bot specific files ###
 token.txt
+modules/
+src/test/
