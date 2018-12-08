@@ -13,7 +13,7 @@ public class Shutdown
         implements Command {
 
     @Override
-    public String exec(IMessage message) {
+    public String exec(String args, IMessage message) {
 
         if (!(message.getAuthor() == Main.client.getApplicationOwner())) return "Command can only be run by app owner.";
 

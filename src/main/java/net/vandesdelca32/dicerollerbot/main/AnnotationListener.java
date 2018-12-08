@@ -42,18 +42,22 @@ public class AnnotationListener {
 
 
         // trim the message to the first word only for comparison
-        String[] cmd = message.split("\\s+?");
-        logger.info("Command string: {}, Executor: {}", cmd[0], event.getAuthor().mention());
+        String[] cmd = message.split("\\s+", 2);
+        String args = "";
+        if (cmd.length > 1 && cmd[1] != null) args = cmd[1];
+        logger.info("Command {} run by {} with args {}", cmd[0], event.getAuthor().mention(), args);
 
         for (Command command : Main.commands) {
             for (String name : command.names()) {
                 if (cmd[0].equals(Main.commandPrefix + name.toLowerCase())) {
                     MessageBuilder resp = new MessageBuilder(event.getClient());
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
-                        resp.appendContent(command.exec(event.getMessage()));
+
+                        resp.appendContent(command.exec(args, event.getMessage()));
                     } else {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
                     }
+                    resp.withChannel(event.getChannel());
                     resp.build();
                     return;
                 }

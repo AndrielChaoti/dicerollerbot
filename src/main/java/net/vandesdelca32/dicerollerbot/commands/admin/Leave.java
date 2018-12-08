@@ -12,7 +12,7 @@ import sx.blah.discord.util.MessageBuilder;
 public class Leave
         implements Command {
     @Override
-    public String exec(IMessage message) {
+    public String exec(String args, IMessage message) {
 
         MessageBuilder resp = new MessageBuilder(Main.client);
         resp.appendContent("Goodbye.");

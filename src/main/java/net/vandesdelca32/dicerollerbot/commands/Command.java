@@ -2,6 +2,8 @@ package net.vandesdelca32.dicerollerbot.commands;
 
 import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
+import net.vandesdelca32.dicerollerbot.commands.general.Help;
+import net.vandesdelca32.dicerollerbot.commands.general.Roll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IMessage;
@@ -24,6 +26,8 @@ public interface Command {
 
         commands.add(new Shutdown());
         commands.add(new Leave());
+        commands.add(new Roll());
+        commands.add(new Help());
 
         logger.info("Initialized {} commands.", commands.size());
         return commands;
@@ -32,10 +36,12 @@ public interface Command {
     /**
      * This is the code that the command will execute.
      *
+     *
+     * @param args
      * @param message The IMessage object that the command is sent in.
      * @return Expects a String return as a message to be sent in response to the command.
      */
-    String exec(IMessage message);
+    String exec(String args, IMessage message);
 
     /**
      * This method gives the list of names that a command can use. The first name in the array is what will

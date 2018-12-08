@@ -10,7 +10,7 @@ import sx.blah.discord.handle.obj.Permissions;
 public class Help
         implements Command {
     @Override
-    public String exec(IMessage message) {
+    public String exec(String args, IMessage message) {
         return "There will be a help command here soon.";
     }
 
