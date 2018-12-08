@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface Command {
 
-    final static Logger logger = LoggerFactory.getLogger(Command.class);
+    Logger logger = LoggerFactory.getLogger(Command.class);
 
     /**
      * Generate and load all of the commands into memory.

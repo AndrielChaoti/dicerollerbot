@@ -7,7 +7,8 @@ import sx.blah.discord.handle.obj.Permissions;
 /**
  * A... not so basic dice roller.
  */
-public class Roll implements Command {
+public class Roll
+        implements Command {
     @Override
     public String exec(IMessage message) {
         return null;

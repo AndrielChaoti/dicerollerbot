@@ -9,7 +9,8 @@ import sx.blah.discord.util.MessageBuilder;
 /**
  * Command used to leave a guild.
  */
-public class Leave implements Command {
+public class Leave
+        implements Command {
     @Override
     public String exec(IMessage message) {
 

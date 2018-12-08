@@ -7,7 +7,8 @@ import sx.blah.discord.handle.obj.Permissions;
 /**
  * The obligatory help command, lists existing commands.
  */
-public class Help implements Command {
+public class Help
+        implements Command {
     @Override
     public String exec(IMessage message) {
         return "There will be a help command here soon.";
