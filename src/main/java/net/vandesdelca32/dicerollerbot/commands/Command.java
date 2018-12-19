@@ -3,6 +3,7 @@ package net.vandesdelca32.dicerollerbot.commands;
 import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
 import net.vandesdelca32.dicerollerbot.commands.general.Help;
+import net.vandesdelca32.dicerollerbot.commands.general.Info;
 import net.vandesdelca32.dicerollerbot.commands.general.Roll;
 import net.vandesdelca32.dicerollerbot.commands.tools.GameChannel;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public interface Command {
         commands.add(new Roll());
         commands.add(new GameChannel());
         commands.add(new Help());
+        commands.add(new Info());
 
         logger.info("Initialized {} commands.", commands.size());
         return commands;
@@ -61,6 +63,4 @@ public interface Command {
     default Permissions[] requiredPerms() {
         return new Permissions[0];
     }
-
-    ;
 }

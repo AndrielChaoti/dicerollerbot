@@ -53,7 +53,10 @@ public class AnnotationListener {
                     MessageBuilder resp = new MessageBuilder(event.getClient());
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         try {
-                            resp.appendContent(command.exec(args, event.getMessage()));
+                            String result = command.exec(args, event.getMessage());
+                            if (result != null && !result.isEmpty()) {
+                                resp.appendContent(result);
+                            }
                         } catch (Exception e) {
                             resp.appendContent("***Oops!*** Something broke and the command couldn't be completed.\n");
                             resp.appendContent(e.toString(), MessageBuilder.Styles.CODE);
@@ -62,7 +65,7 @@ public class AnnotationListener {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
                     }
                     resp.withChannel(event.getChannel());
-                    resp.build();
+                    if(!resp.getContent().isEmpty()) resp.build();
                     return;
                 }
             }
