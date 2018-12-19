@@ -72,13 +72,12 @@ public class Roll
      * @return The random number between 1 and `faces` that was chosen.
      */
     private String rollDie(int faces, boolean fate) {
-        String output = "";
         Random random = new Random();
 
         int result = random.nextInt(faces);
         result++;
 
-        output = String.valueOf(result);
+        String output = String.valueOf(result);
         if (fate) {
             output = this.fate[result - 1];
         }

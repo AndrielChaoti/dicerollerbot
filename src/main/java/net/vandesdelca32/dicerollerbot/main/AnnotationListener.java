@@ -34,7 +34,7 @@ public class AnnotationListener {
      */
     @EventSubscriber
     public void onMessageReceivedEvent(MessageReceivedEvent event) {
-        String message = event.getMessage().getContent().toLowerCase();
+        String message = event.getMessage().getContent();
 
         // ignore message if not prefixed or from an actual user.
         if (event.getAuthor().isBot()) return;
@@ -49,7 +49,7 @@ public class AnnotationListener {
 
         for (Command command : Main.commands) {
             for (String name : command.names()) {
-                if (cmd[0].equals(Main.commandPrefix + name.toLowerCase())) {
+                if (cmd[0].equalsIgnoreCase(Main.commandPrefix + name.toLowerCase())) {
                     MessageBuilder resp = new MessageBuilder(event.getClient());
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         try {
