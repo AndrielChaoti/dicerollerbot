@@ -45,15 +45,19 @@ public class AnnotationListener {
         String[] cmd = message.split("\\s+", 2);
         String args = "";
         if (cmd.length > 1 && cmd[1] != null) args = cmd[1];
-        logger.info("Command {} run by {} with args {}", cmd[0], event.getAuthor().mention(), args);
+        logger.info("Command {} called by {}", cmd[0], event.getAuthor().mention());
 
         for (Command command : Main.commands) {
             for (String name : command.names()) {
                 if (cmd[0].equals(Main.commandPrefix + name.toLowerCase())) {
                     MessageBuilder resp = new MessageBuilder(event.getClient());
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
-
-                        resp.appendContent(command.exec(args, event.getMessage()));
+                        try {
+                            resp.appendContent(command.exec(args, event.getMessage()));
+                        } catch (Exception e) {
+                            resp.appendContent("***Oops!*** Something broke and the command couldn't be completed.\n");
+                            resp.appendContent(e.toString(), MessageBuilder.Styles.CODE);
+                        }
                     } else {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
                     }

@@ -4,6 +4,7 @@ import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
 import net.vandesdelca32.dicerollerbot.commands.general.Help;
 import net.vandesdelca32.dicerollerbot.commands.general.Roll;
+import net.vandesdelca32.dicerollerbot.commands.tools.GameChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IMessage;
@@ -27,6 +28,7 @@ public interface Command {
         commands.add(new Shutdown());
         commands.add(new Leave());
         commands.add(new Roll());
+        commands.add(new GameChannel());
         commands.add(new Help());
 
         logger.info("Initialized {} commands.", commands.size());
@@ -56,5 +58,9 @@ public interface Command {
      *
      * @return A Permissions array of every permission that should be present before running this command.
      */
-    Permissions[] requiredPerms();
+    default Permissions[] requiredPerms() {
+        return new Permissions[0];
+    }
+
+    ;
 }
