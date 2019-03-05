@@ -149,3 +149,4 @@ $RECYCLE.BIN/
 token.txt
 modules/
 src/test/
+/logs/
