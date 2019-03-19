@@ -79,6 +79,7 @@ public class AnnotationListener {
                         } catch (Exception e) {
                             resp.appendContent("***Oops!*** Something broke and the command couldn't be completed.\n");
                             resp.appendContent(e.toString(), MessageBuilder.Styles.CODE);
+                            logger.error("Unhandled exception:", e);
                         }
                     } else {
                         resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());

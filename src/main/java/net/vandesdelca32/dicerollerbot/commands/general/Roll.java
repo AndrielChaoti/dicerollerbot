@@ -33,8 +33,9 @@ import java.util.regex.Pattern;
 public class Roll
         implements Command {
 
-    private Pattern diceFormat = Pattern.compile("^(\\d*)d((?:F)|(?:[1-9]\\d*(.*)))$", Pattern.CASE_INSENSITIVE);
-    private String[] fate = {"-1", "-1", "0", "0", "+1", "+1"};
+    private Pattern diceFormat = Pattern.compile("^(\\d*)d((?:F)|(?:[1-9]\\d*))(.*)$", Pattern.CASE_INSENSITIVE);
+    private String[] fateFaces = {"-1", "-1", "0", "0", "+1", "+1"};
+
 
     @Override
     public String exec(String args, IMessage message) {
@@ -45,44 +46,120 @@ public class Roll
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
 
-        if (!m.find()) return "Not a valid dice code...";
+        if (!m.matches()) return ">> `" + args + "` is not a valid dice code." ;
 
+        // parse a dice code...
         int qty, faces;
+        //try {
+        logger.debug("qty: " + m.group(1) + "\tfaces: " + m.group(2) + "\trest:" + m.group(3));
         if (m.group(1).isEmpty()) {
             qty = 1;
         } else {
             qty = Integer.parseInt(m.group(1));
         }
-        if (m.group(2).equals("f")) {
+        if (m.group(2).equalsIgnoreCase("F")) {
             fateMode = true;
             faces = 6;
         } else {
             faces = Integer.parseInt(m.group(2));
         }
+        //} catch (NumberFormatException e) {
+        //return "**Error:** Could not parse dice code...";
+        //}
 
-        if (qty > 100) return "Too many dice!";
-        if (faces > 1000) return "Dice are too big!";
+        if (qty > 100) return ">> **Error**: Trying to roll too many dice. *Keep the number of dice under 100.*";
+        if (faces > 1000) return ">> **Error**: Dice are too big. *Keep the number of faces under 1000.*";
+
+        //does group 3 match another dice code?
+        boolean hasMatches;
+        if (m.group(3).trim().startsWith("+") || m.group(3).trim().startsWith("-")) {
+            String nextm = m.group(3).trim().substring(1);
+            Matcher rm = diceFormat.matcher(nextm);
+            if (rm.matches()) {
+                logger.debug("has multiple matches");
+                // handle multiple dice codes... (this has to be recursive down to so many levels)
+            }
+        }
 
         String[] output = new String[qty];
         long sum = 0;
+        long sum2 = 0;
         for (int i = 0; i < qty; i++) {
             output[i] = rollDie(faces, fateMode);
             sum = sum + Long.parseLong(output[i]);
         }
 
-        StringBuilder r = new StringBuilder();
-        r.append(sum);
-        r.append(" [");
+        // handle math
+        long val = 0;
+        String oper="";
+        try {
+            val = Long.parseLong(m.group(3).trim().substring(1).trim());
+            switch (m.group(3).trim().charAt(0)) {
+                case '+':
+                    sum2 = sum + val;
+                    oper = "+";
+                    break;
+                case '-':
+                    sum2 = sum - val;
+                    oper = "-";
+                    break;
+                case '*':
+                    sum2 = sum * val;
+                    oper = "*";
+                    break;
+                case '/':
+                    sum2 = sum / val;
+                    oper = "/";
+                    break;
+                default:
+                    sum2 = sum; // no math to do here, we only want basic math for now.
+                    oper = "";
+                    break;
+            }
+
+        } catch (NumberFormatException e) {
+            logger.debug("could not perform math operation, likely not a valid number passed. " + e);
+            val = 0;
+            throw e;
+        }
+
+        // debuggable output
+/*        StringBuilder r = new StringBuilder();
+        r.append(sum2).append(" `(");
         for (int i = 0; i < output.length; i++) {
             r.append(output[i]);
-            if (i != output.length - 1) r.append(", ");
+            if (i != output.length - 1) r.append(" + ");
         }
-        r.append("]");
+        r.append(")");
+        if (!oper.isEmpty()) {
+            r.append(" ").append(oper).append(" ").append(val);
+        }
+        r.append("`").append(" (*faces* = ").append(sum).append(")");*/
 
-        return String.format("dice code: %s\n" +
-                        "rest: %s\n (NYI)" +
-                        "result! %s\n",
-                m.group(0), m.group(3), r.toString());
+        // nice output
+        StringBuilder r = new StringBuilder();
+        r.append(sum2);
+        // append the mathy bit:
+        r.append(" = `(");
+        for (int i = 0; i < output.length; i++){
+            r.append(output[i]);
+            if (i != output.length - 1) r.append(" + ");
+        }
+        r.append(")");
+        // did we do addl math?
+        if (!oper.isEmpty()) r.append(" ").append(oper).append(" ").append(val);
+        r.append("`");
+
+        // debug chat output:
+/*        return String.format("*Full Code*: %s\n*Qty*: %s,\t*Faces*: %s, *Rest*: %s\n**Results**: %s",
+                m.group(0), qty, faces, Utility.escapeMarkdown(m.group(3)), r.toString());*/
+        // normal chat output
+        return String.format(">> Rolling `%s`\n\n**Result:** %s",
+                m.group(0), r.toString());
+        //return String.format("dice code: %s\n" +
+        //                "rest: %s\n (NYI)" +
+        //                "result! %s\n",
+        //        m.group(0), m.group(3), r.toString());
     }
 
     /**
@@ -100,7 +177,7 @@ public class Roll
 
         String output = String.valueOf(result);
         if (fate) {
-            output = this.fate[result - 1];
+            output = this.fateFaces[result - 1];
         }
 
         return output;
