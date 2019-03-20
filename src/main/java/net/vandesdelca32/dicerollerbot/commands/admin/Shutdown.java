@@ -39,7 +39,7 @@ public class Shutdown
         MessageBuilder messageBuilder = new MessageBuilder(Main.client);
 
         // let people know.
-        messageBuilder.appendContent("Shutting down...");
+        messageBuilder.appendContent(">> Shutting down...");
         messageBuilder.withChannel(message.getChannel());
         messageBuilder.build();
 

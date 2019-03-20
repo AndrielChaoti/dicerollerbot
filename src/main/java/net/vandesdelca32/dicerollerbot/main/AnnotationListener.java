@@ -64,12 +64,12 @@ public class AnnotationListener {
         String[] cmd = message.split("\\s+", 2);
         String args = "";
         if (cmd.length > 1 && cmd[1] != null) args = cmd[1];
-        logger.info("Command {} called by {}", cmd[0], event.getAuthor().mention());
+        logger.info("Command {} called by {}", cmd[0], event.getAuthor());
 
+        MessageBuilder resp = new MessageBuilder(event.getClient());
         for (Command command : Main.commands) {
             for (String name : command.names()) {
                 if (cmd[0].equalsIgnoreCase(Main.commandPrefix + name.toLowerCase())) {
-                    MessageBuilder resp = new MessageBuilder(event.getClient());
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         try {
                             String result = command.exec(args, event.getMessage());
@@ -77,12 +77,12 @@ public class AnnotationListener {
                                 resp.appendContent(result);
                             }
                         } catch (Exception e) {
-                            resp.appendContent("***Oops!*** Something broke and the command couldn't be completed.\n");
+                            resp.appendContent(">> ***Oops!*** Something broke and the command couldn't be completed.\n");
                             resp.appendContent(e.toString(), MessageBuilder.Styles.CODE);
-                            logger.error("Unhandled exception:", e);
+                            logger.error("Unhandled exception: ", e);
                         }
                     } else {
-                        resp.appendContent("You don't have the permission to do that, " + event.getAuthor().mention());
+                        resp.appendContent(">> You don't have the permission to do that, " + event.getAuthor().mention());
                     }
                     resp.withChannel(event.getChannel());
                     if (!resp.getContent().isEmpty()) resp.build();

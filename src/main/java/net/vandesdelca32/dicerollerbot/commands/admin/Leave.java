@@ -34,7 +34,7 @@ public class Leave
     public String exec(String args, IMessage message) {
 
         MessageBuilder resp = new MessageBuilder(Main.client);
-        resp.appendContent("Goodbye.");
+        resp.appendContent(">> 👋 Goodbye.");
         resp.build();
 
         message.getGuild().leave();

@@ -1,4 +1,4 @@
-/*
+/*******************************************************************************
  * Copyright (c) 2019 Donald "AndrielChaoti" Granger.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -17,27 +17,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-package net.vandesdelca32.dicerollerbot.main;
+package net.vandesdelca32.dicerollerbot.commands.admin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.vandesdelca32.dicerollerbot.commands.Command;
+import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.handle.obj.Permissions;
 
-public class Utility {
+import static net.vandesdelca32.dicerollerbot.main.Main.*;
 
-    static final Logger logger = LoggerFactory.getLogger(Utility.class);
+public class SetPrefix implements Command {
 
-    /**
-     * Takes in an arbitrary string and prepends the backslash (\) character to any markdown formatting.
-     *
-     * @param input The string to parse for Markdown.
-     * @return A string with all markdown sequences escaped.
-     */
-    public static String escapeMarkdown(String input) {
-        input = input.replace("*", "\\*");
-        input = input.replace("_", "\\_");
-        input = input.replace("`", "\\`");
-        input = input.replace("|", "\\|");
-        input = input.replace("~", "\\~");
-        return input;
+    @Override
+    public String exec(String args, IMessage message) {
+        if (!(message.getAuthor() == client.getApplicationOwner())) return ">> Command can only be run by app owner.";
+
+        botConfig.properties.setProperty("chatPrefix", args);
+        commandPrefix = args;
+        return ">> Command prefix set to \"" + args + "\"";
+    }
+
+    @Override
+    public String[] names() {
+        return new String[]{"SetPrefix"};
+    }
+
+    @Override
+    public Permissions[] requiredPerms() {
+        return new Permissions[0];
     }
 }

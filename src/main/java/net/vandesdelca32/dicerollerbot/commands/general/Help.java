@@ -30,7 +30,7 @@ public class Help
         implements Command {
     @Override
     public String exec(String args, IMessage message) {
-        return "There will be a help command here soon.";
+        return ">> There will be a help command here soon.";
     }
 
     @Override

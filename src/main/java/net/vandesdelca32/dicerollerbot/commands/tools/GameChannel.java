@@ -95,7 +95,7 @@ public class GameChannel
     }
 
     public String usage() {
-        return "Invalid Syntax. Expecting\n" +
+        return ">> Invalid Syntax. Expecting\n" +
                 "**[Channel Name]**\n" +
                 "**[@Host]**\n" +
                 "**[Game System]**\n" +
