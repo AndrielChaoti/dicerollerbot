@@ -33,12 +33,14 @@ import java.util.regex.Pattern;
 public class Roll
         implements Command {
 
+
     private Pattern diceFormat = Pattern.compile("^(\\d*)d((?:F)|(?:[1-9]\\d*))(.*)$", Pattern.CASE_INSENSITIVE);
     private String[] fateFaces = {"-1", "-1", "0", "0", "+1", "+1"};
 
 
     @Override
     public String exec(String args, IMessage message) {
+        // TODO: This can be so much better. This code is cancer.
         Matcher m = diceFormat.matcher(args);
         boolean fateMode = false;
 
@@ -46,12 +48,12 @@ public class Roll
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
 
-        if (!m.matches()) return ">> `" + args + "` is not a valid dice code." ;
+        if (!m.matches()) return ">> `" + args + "` is not a valid dice code.";
 
         // parse a dice code...
         int qty, faces;
         //try {
-        logger.debug("qty: " + m.group(1) + "\tfaces: " + m.group(2) + "\trest:" + m.group(3));
+        logger.debug("qty: {} \tfcs: {}\trest: {}", m.group(1), m.group(2), m.group(3));
         if (m.group(1).isEmpty()) {
             qty = 1;
         } else {
@@ -91,75 +93,67 @@ public class Roll
 
         // handle math
         long val = 0;
-        String oper="";
+        String oper = "";
+
         try {
-            val = Long.parseLong(m.group(3).trim().substring(1).trim());
-            switch (m.group(3).trim().charAt(0)) {
-                case '+':
-                    sum2 = sum + val;
-                    oper = "+";
-                    break;
-                case '-':
-                    sum2 = sum - val;
-                    oper = "-";
-                    break;
-                case '*':
-                    sum2 = sum * val;
-                    oper = "*";
-                    break;
-                case '/':
-                    sum2 = sum / val;
-                    oper = "/";
-                    break;
-                default:
-                    sum2 = sum; // no math to do here, we only want basic math for now.
-                    oper = "";
-                    break;
+            // Attempt to get number
+            if (!m.group(3).isEmpty()) {
+                val = Long.parseLong(m.group(3).trim().substring(1).trim());
+                switch (m.group(3).trim().charAt(0)) {
+                    case '+':
+                        sum2 = sum + val;
+                        oper = "+";
+                        break;
+                    case '-':
+                        sum2 = sum - val;
+                        oper = "-";
+                        break;
+                    case '*':
+                        sum2 = sum * val;
+                        oper = "*";
+                        break;
+                    case '/':
+                        sum2 = sum / val;
+                        oper = "/";
+                        break;
+                    default:
+                        sum2 = sum; // no math to do here, we only want basic math for now.
+                        oper = "";
+                        break;
+                }
+            } else {
+                // extra info omitted, no math
+                oper = "";
+                sum2 = sum;
             }
-
         } catch (NumberFormatException e) {
-            logger.debug("could not perform math operation, likely not a valid number passed. " + e);
+            // not a valid number, stop.
             val = 0;
-            throw e;
         }
 
-        // debuggable output
-/*        StringBuilder r = new StringBuilder();
-        r.append(sum2).append(" `(");
-        for (int i = 0; i < output.length; i++) {
-            r.append(output[i]);
-            if (i != output.length - 1) r.append(" + ");
-        }
-        r.append(")");
-        if (!oper.isEmpty()) {
-            r.append(" ").append(oper).append(" ").append(val);
-        }
-        r.append("`").append(" (*faces* = ").append(sum).append(")");*/
-
-        // nice output
+        // build response
         StringBuilder r = new StringBuilder();
         r.append(sum2);
         // append the mathy bit:
         r.append(" = `(");
-        for (int i = 0; i < output.length; i++){
+        for (int i = 0; i < output.length; i++) {
             r.append(output[i]);
-            if (i != output.length - 1) r.append(" + ");
+            if (i != output.length - 1) {
+                r.append(" + ");
+            }
         }
         r.append(")");
+
         // did we do addl math?
-        if (!oper.isEmpty()) r.append(" ").append(oper).append(" ").append(val);
+        if (!oper.isEmpty()) {
+            r.append(" ").append(oper).append(" ").append(val);
+        }
+
         r.append("`");
 
-        // debug chat output:
-/*        return String.format("*Full Code*: %s\n*Qty*: %s,\t*Faces*: %s, *Rest*: %s\n**Results**: %s",
-                m.group(0), qty, faces, Utility.escapeMarkdown(m.group(3)), r.toString());*/
         // normal chat output
         return String.format(">> Rolling `%s`\n\n**Result:** %s",
                 m.group(0), r.toString());
-        //return String.format("dice code: %s\n" +
-        //                "rest: %s\n (NYI)" +
-        //                "result! %s\n",
-        //        m.group(0), m.group(3), r.toString());
     }
 
     /**
