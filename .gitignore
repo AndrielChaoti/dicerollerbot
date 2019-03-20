@@ -3,10 +3,10 @@
 # Edit at https://www.gitignore.io/?templates=java,maven,windows,jetbrains
 
 ### Java ###
-# Compiled class file
+# Compiled class FILE_NAME
 *.class
 
-# Log file
+# Log FILE_NAME
 *.log
 
 # BlueJ files
@@ -92,7 +92,7 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-# Android studio 3.1+ serialized cache file
+# Android studio 3.1+ serialized cache FILE_NAME
 .idea/caches/build_file_checksums.ser
 
 ### JetBrains Patch ###
@@ -124,13 +124,13 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
-# Dump file
+# Dump FILE_NAME
 *.stackdump
 
-# Folder config file
+# Folder config FILE_NAME
 [Dd]esktop.ini
 
-# Recycle Bin used on file shares
+# Recycle Bin used on FILE_NAME shares
 $RECYCLE.BIN/
 
 # Windows Installer files
@@ -150,3 +150,4 @@ token.txt
 modules/
 src/test/
 /logs/
+/bot.properties

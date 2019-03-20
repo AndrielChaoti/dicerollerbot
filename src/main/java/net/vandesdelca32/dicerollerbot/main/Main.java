@@ -34,6 +34,9 @@ public class Main {
      * The IDiscordClient object used by the bot
      */
     public static IDiscordClient client;
+
+    public static BotConfig botConfig;
+
     /**
      * Contains all of the commands currently in use by the bot.
      */
@@ -41,12 +44,23 @@ public class Main {
     public static String commandPrefix = "!";
 
     public static void main(String[] args) {
-        // Attempt to load the bot token into memory:
-        String token = "";
-        List<String> tokenList = FileReader.readFile("token.txt");
-        if (tokenList != null && tokenList.size() != 0) {
-            token = tokenList.get(0);
+
+        // Initialize shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logger.info("Shutting down...");
+            botConfig.saveConfig();
+        }));
+
+        // get and load bot configuration
+        logger.info("Loading configuration...");
+        botConfig = new BotConfig();
+        String token = botConfig.properties.getProperty("token");
+        if (token.isEmpty() || token.equals("insert token here")) {
+            logger.error("TOKEN NOT FOUND. Please provide a valid Discord token in bot.properties and then restart this bot!");
+            System.exit(1);
         }
+
+        commandPrefix = botConfig.properties.getProperty("chatPrefix");
 
         // Log in the discord client
         client = Client.createClient(token, true);

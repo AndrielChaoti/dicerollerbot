@@ -19,11 +19,14 @@
 
 package net.vandesdelca32.dicerollerbot.main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.util.DiscordException;
 
 public class Client {
+    static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static IDiscordClient createClient(String token, boolean login) {
         ClientBuilder clientBuilder = new ClientBuilder();
@@ -36,7 +39,9 @@ public class Client {
                 return clientBuilder.build();
             }
         } catch (DiscordException e) {
-            e.printStackTrace();
+            logger.error("Login failed: ", e);
+            logger.error("Check that your token in bot.properties is valid!");
+            System.exit(1);
             return null;
         }
     }
