@@ -1,10 +1,14 @@
----
 language: java
 jdk: oraclejdk8
-
 install: true
-script: ./mvn clean package
-
+script: mvn clean package
+deploy:
+  provider: releases
+  api_key:
+    secure: bcYA5wU1vL1U5O1NoX3L0etMpJQ97oi60OHpp/3btUbaJU4x4zco6KQJfIW0pvlT+W07iP6fgNAy/jjRMu0M115DavxGSPuyAoEA3/seeJKI4TMMILU33bsqFGw0sar6Tyu2ZJ5fojuycQuQf7ParEKI7Br8nqEnQsxommiPgSEa+H4GYb4S/IUqBYkvA/Sx3H4Dokc0chZ+BffRCp9v/C6ABl1b766Hfphg8BlSEasV3xcWUtvc9q8g7rD2tfIguiCJR2etARwSq5dZ+8NDx0bACV8jfki8kjXoHZxpwo72Rf+AdK5OevzUd6xE22oLauzUh7/3khsmyg8DplZP8aWPZM1lZneHLDEGESDTr0nXnWtr7Oe1vR8H4LPnA/5ylxib+nB+5LU4jNL2ViSE2rCOEK1O/3GvT8Rv28oYSnyQALMy9ko9sG6pezMancAg015Gwgxq2g+JDWhtuaIF7BxdKYTCtZpohvHzj6DF2Pb+XyUEiGENCxVVg57MGv3tSwbVck5nl8pbvkzyE6miOknwCUwWywKMp6OgWALPkhhpanbdSKCEFR6gD+ulemPWl7k6k/XwUOilQKj71ljRV7M+Z7bq08rMLcqRvwrNzNHyyfGI8hf9yX6AFgDSHHAPHRaNtB/8eSE2IcDF21tN2WzFyxQWxJAaq6gUF++QMrs=
+  file: "/home/travis/build/AndrielChaoti/dicerollerbot/target/DiceRollerBot.jar"
+  on:
+    tags: true
 cache:
   directories:
-    - $HOME/.m2
+  - "$HOME/.m2"
