@@ -63,7 +63,7 @@ public interface Command {
     /**
      * This is the code that the command will execute.
      *
-     * @param args
+     * @param args A string containing the arguments that were passed from the user.
      * @param message The IMessage object that the command is sent in.
      * @return Expects a String return as a message to be sent in response to the command.
      */
