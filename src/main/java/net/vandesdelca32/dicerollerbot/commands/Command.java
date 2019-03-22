@@ -20,6 +20,7 @@
 package net.vandesdelca32.dicerollerbot.commands;
 
 import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
+import net.vandesdelca32.dicerollerbot.commands.admin.Restart;
 import net.vandesdelca32.dicerollerbot.commands.admin.SetPrefix;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
 import net.vandesdelca32.dicerollerbot.commands.general.Help;
@@ -47,6 +48,7 @@ public interface Command {
         List<Command> commands = new LinkedList<>();
 
         commands.add(new Shutdown());
+        commands.add(new Restart());
         commands.add(new Leave());
         commands.add(new SetPrefix());
         commands.add(new Roll());
