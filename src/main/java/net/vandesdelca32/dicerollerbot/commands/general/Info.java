@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.general;
 
@@ -49,5 +49,15 @@ public class Info
     @Override
     public String[] names() {
         return new String[]{"Info"};
+    }
+
+    @Override
+    public String usage() {
+        return null;
+    }
+
+    @Override
+    public String helpText() {
+        return "Prints out additional bot information.";
     }
 }

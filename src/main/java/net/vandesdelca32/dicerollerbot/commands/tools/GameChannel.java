@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.tools;
 
@@ -50,8 +50,8 @@ public class GameChannel
 
         //Sanity checking
 
-        if (channelDetails.length < 5) return usage();
-        if (!channelDetails[0].matches("[a-z\\-0-9]{2,32}")) return usage();
+        if (channelDetails.length < 5) return showUsage();
+        if (!channelDetails[0].matches("[a-z\\-0-9]{2,32}")) return showUsage();
         if (!channelDetails[4].equalsIgnoreCase("fixed") &&
                 !channelDetails[4].equalsIgnoreCase("flex") &&
                 !channelDetails[4].equalsIgnoreCase("flexible")) {
@@ -59,7 +59,7 @@ public class GameChannel
         }
 
         List<IUser> hosts = message.getMentions();
-        if (hosts == null || hosts.isEmpty()) return usage();
+        if (hosts == null || hosts.isEmpty()) return showUsage();
 
         // generate topic text.
         StringBuilder topic = new StringBuilder();
@@ -95,13 +95,18 @@ public class GameChannel
     }
 
     public String usage() {
-        return ">> Invalid Syntax. Expecting\n" +
-                "**[Channel Name]**\n" +
-                "**[@Host]**\n" +
-                "**[Game System]**\n" +
-                "**[Player Count]**\n" +
-                "**[__Fixed__|__Flex(ible)__]**\n" +
-                "**(Additional Information)**";
+        return "[Channel Name]\n" +
+                "[@Host]\n" +
+                "[Game System]\n" +
+                "[Player Count]\n" +
+                "[\"Fixed\"|\"Flex\"|\"Flexible\"]\n" +
+                "(Additional Information)";
+    }
+
+    @Override
+    public String helpText() {
+        return "Sets up a game channel for the specified GM to use. Use a line break to separate each argument.\n" +
+                "__**Additional Information** cannot contain any line breaks!__";
     }
 
     @Override
@@ -111,7 +116,7 @@ public class GameChannel
 
     @Override
     public Permissions[] requiredPerms() {
-        return new Permissions[]{Permissions.MANAGE_CHANNELS};
+        return new Permissions[]{Permissions.MANAGE_CHANNELS, Permissions.MANAGE_ROLES, Permissions.MANAGE_MESSAGES};
     }
 
 

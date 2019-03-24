@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2019 Donald "AndrielChaoti" Granger.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.admin;
 
@@ -39,6 +39,17 @@ public class SetPrefix implements Command {
     @Override
     public String[] names() {
         return new String[]{"SetPrefix"};
+    }
+
+    @Override
+    public String usage() {
+        return "[new prefix]";
+    }
+
+    @Override
+    public String helpText() {
+        return "Changes the bot's command prefix.\n" +
+                "Only the bot owner can use this command.";
     }
 
     @Override

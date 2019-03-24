@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands;
 
@@ -23,10 +23,12 @@ import net.vandesdelca32.dicerollerbot.commands.admin.Leave;
 import net.vandesdelca32.dicerollerbot.commands.admin.Restart;
 import net.vandesdelca32.dicerollerbot.commands.admin.SetPrefix;
 import net.vandesdelca32.dicerollerbot.commands.admin.Shutdown;
+import net.vandesdelca32.dicerollerbot.commands.general.Commands;
 import net.vandesdelca32.dicerollerbot.commands.general.Help;
 import net.vandesdelca32.dicerollerbot.commands.general.Info;
 import net.vandesdelca32.dicerollerbot.commands.general.Roll;
 import net.vandesdelca32.dicerollerbot.commands.tools.GameChannel;
+import net.vandesdelca32.dicerollerbot.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IMessage;
@@ -47,6 +49,7 @@ public interface Command {
     static List<Command> init() {
         List<Command> commands = new LinkedList<>();
 
+        commands.add(new Commands());
         commands.add(new Shutdown());
         commands.add(new Restart());
         commands.add(new Leave());
@@ -78,11 +81,28 @@ public interface Command {
     String[] names();
 
     /**
+     * The command's usage syntax. [Required argument] (Optional argument) "literal text"
+     *
+     * @return A string representing the command's current signature.
+     */
+    String usage();
+
+    /**
+     * @return The text to be displayed when the user calls commands#general#Help
+     */
+    String helpText();
+
+
+    /**
      * This method should return a list of permissions that is required to run the command.
      *
      * @return A Permissions array of every permission that should be present before running this command.
      */
     default Permissions[] requiredPerms() {
         return new Permissions[0];
+    }
+
+    default String showUsage() {
+        return (Main.commandPrefix + names()[0] + " " + (usage() == null ? "" : usage()));
     }
 }

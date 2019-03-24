@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2019 Donald "AndrielChaoti" Granger.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.admin;
 
@@ -31,7 +31,9 @@ public class Restart
     @Override
     public String exec(String args, IMessage message) {
 
-        if (!(message.getAuthor() == Main.client.getApplicationOwner())) return "Command can only be run by app owner.";
+        if (!(message.getAuthor() == Main.client.getApplicationOwner())) {
+            return ">> Command can only be run by app owner.";
+        }
 
         MessageBuilder messageBuilder = new MessageBuilder(Main.client);
 
@@ -47,7 +49,21 @@ public class Restart
 
     @Override
     public String[] names() {
-        return new String[]{"Shutdown"};
+        return new String[]{"Restart"};
+    }
+
+    @Override
+    public String usage() {
+        return null;
+    }
+
+    @Override
+    public String helpText() {
+        return "Restarts the bot.\n" +
+                "***Please note that this only works when the bot is running as a service or wrapped in a script" +
+                " that is listening for exit codes.***\n" +
+                "This command shuts the bot down with __exit code 2__\n" +
+                "Only the bot owner can use this command.";
     }
 
     @Override

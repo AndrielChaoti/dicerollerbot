@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.general;
 
@@ -180,6 +180,18 @@ public class Roll
     @Override
     public String[] names() {
         return new String[]{"Roll", "r"};
+    }
+
+    @Override
+    public String usage() {
+        return "[dice code]";
+    }
+
+    @Override
+    public String helpText() {
+        return "Rolls some dice!\n" +
+                "Uses the standard RPG dice format of *n*d*n*, as well as basic math functionality.\n" +
+                "***NOTE:*** The rolling functionality is very basic and still __work in progress.__";
     }
 
     @Override

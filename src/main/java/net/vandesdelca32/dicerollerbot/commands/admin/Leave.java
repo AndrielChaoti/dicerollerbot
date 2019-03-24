@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.admin;
 
@@ -45,6 +45,17 @@ public class Leave
     @Override
     public String[] names() {
         return new String[]{"Leave"};
+    }
+
+    @Override
+    public String usage() {
+        return null;
+    }
+
+    @Override
+    public String helpText() {
+        return "Makes the bot leave the current guild.\n" +
+                "Doesn't stop it from being joining again with a new invite.";
     }
 
     @Override

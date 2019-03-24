@@ -15,7 +15,7 @@
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- ******************************************************************************/
+ */
 
 package net.vandesdelca32.dicerollerbot.commands.admin;
 
@@ -34,7 +34,9 @@ public class Shutdown
     @Override
     public String exec(String args, IMessage message) {
 
-        if (!(message.getAuthor() == Main.client.getApplicationOwner())) return "Command can only be run by app owner.";
+        if (!(message.getAuthor() == Main.client.getApplicationOwner())) {
+            return ">> Command can only be run by app owner.";
+        }
 
         MessageBuilder messageBuilder = new MessageBuilder(Main.client);
 
@@ -51,6 +53,18 @@ public class Shutdown
     @Override
     public String[] names() {
         return new String[]{"Shutdown"};
+    }
+
+    @Override
+    public String usage() {
+        return null;
+    }
+
+    @Override
+    public String helpText() {
+        return "Shuts down the bot.\n" +
+                "This closes the bot with __exit code 0__\n" +
+                "Only the bot owner can use this command.";
     }
 
     @Override
