@@ -133,6 +133,8 @@ public class Roll
 
         // build response
         StringBuilder r = new StringBuilder();
+        // :d20: emote from dragonfish.
+        r.append("<:d20:442809428929150977>");
         r.append(sum2);
         // append the mathy bit:
         r.append(" = `(");
