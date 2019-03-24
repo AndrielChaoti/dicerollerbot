@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.PermissionUtils;
 
@@ -59,12 +60,15 @@ public class AnnotationListener {
         if (event.getAuthor().isBot()) return;
         if (!message.startsWith(Main.commandPrefix)) return;
 
+        // ignore the message if sent in a channel we do not have SEND_MESSAGES permissions for.
+        if (!PermissionUtils.hasPermissions(event.getChannel(), Main.client.getOurUser(), Permissions.SEND_MESSAGES)) {
+            return;
+        }
 
         // trim the message to the first word only for comparison
         String[] cmd = message.split("\\s+", 2);
         String args = "";
         if (cmd.length > 1 && cmd[1] != null) args = cmd[1];
-        logger.info("Command {} called by {}", cmd[0], event.getAuthor());
 
         MessageBuilder resp = new MessageBuilder(event.getClient());
         for (Command command : Main.commands) {
@@ -72,6 +76,7 @@ public class AnnotationListener {
                 if (cmd[0].equalsIgnoreCase(Main.commandPrefix + name.toLowerCase())) {
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         try {
+                            logger.info("Command {} called by {}", cmd[0], event.getAuthor());
                             String result = command.exec(args, event.getMessage());
                             if (result != null && !result.isEmpty()) {
                                 resp.appendContent(result);
