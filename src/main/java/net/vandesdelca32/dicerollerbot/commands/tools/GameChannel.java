@@ -74,6 +74,7 @@ public class GameChannel
         topic.append(channelDetails[3]);
         if (channelDetails[4].equalsIgnoreCase("fixed")) topic.append(" *(Fixed)*");
 
+        if (!message.getGuild().getChannelsByName(channelDetails[0]).isEmpty()) return ">> A channel by that name already exists.";
 
         // we have all of the information we need for the channel, create it.
         IChannel gameChannel = category.createChannel(channelDetails[0]);
