@@ -30,9 +30,6 @@ import static net.vandesdelca32.dicerollerbot.main.Main.commands;
 public class Commands
         implements Command {
 
-    // the maximum length for a command name.
-    private static final int MAX_CMD_LENGTH = 15;
-
     @Override
     public String exec(String args, IMessage message) {
         MessageBuilder mb = new MessageBuilder(client);
