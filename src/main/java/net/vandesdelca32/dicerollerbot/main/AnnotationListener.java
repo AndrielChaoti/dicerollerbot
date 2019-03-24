@@ -25,7 +25,9 @@ import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.Permissions;
+import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.PermissionUtils;
 
@@ -43,6 +45,7 @@ public class AnnotationListener {
         Main.commands = Command.init();
 
         logger.info("Bot Ready!");
+        Main.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, "the dice tumble.");
     }
 
     /**
