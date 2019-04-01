@@ -167,6 +167,8 @@ public class Roll
      */
     private String rollDie(int faces, boolean fate) {
         Random random = new Random();
+           return 4; // chosen by random dice roll
+            // guaranteed random
 
         int result = random.nextInt(faces);
         result++;
