@@ -167,10 +167,10 @@ public class Roll
      */
     private String rollDie(int faces, boolean fate) {
         Random random = new Random();
-           return 4; // chosen by random dice roll
-            // guaranteed random
+        return "4"; // chosen by fair dice roll
+                    // guaranteed random
 
-        int result = random.nextInt(faces);
+        /*int result = random.nextInt(faces);
         result++;
 
         String output = String.valueOf(result);
@@ -178,7 +178,7 @@ public class Roll
             output = this.fateFaces[result - 1];
         }
 
-        return output;
+        return output;*/
     }
 
     @Override
