@@ -37,18 +37,14 @@ public class Roll
     private Pattern diceFormat = Pattern.compile("^(\\d*)d((?:F)|(?:[1-9]\\d*))(.*)$", Pattern.CASE_INSENSITIVE);
     private String[] fateFaces = {"-1", "-1", "0", "0", "+1", "+1"};
 
-
     @Override
     public String exec(String args, IMessage message) {
         // TODO: This can be so much better. This code is cancer.
         Matcher m = diceFormat.matcher(args);
         boolean fateMode = false;
 
-        //Create the randomizer
-        Random random = new Random();
-        random.setSeed(System.currentTimeMillis());
 
-        if (!m.matches()) return ">> `" + args + "` is not a valid dice code.";
+        if (!m.matches()) return "`" + args + "` is not a valid dice code.";
 
         // parse a dice code...
         int qty, faces;
@@ -69,8 +65,8 @@ public class Roll
         //return "**Error:** Could not parse dice code...";
         //}
 
-        if (qty > 100) return ">> **Error**: Trying to roll too many dice. *Keep the number of dice under 100.*";
-        if (faces > 1000) return ">> **Error**: Dice are too big. *Keep the number of faces under 1000.*";
+        if (qty > 100) return "**Error**: Trying to roll too many dice. *Keep the number of dice under 100.*";
+        if (faces > 1000) return "**Error**: Dice are too big. *Keep the number of faces under 1000.*";
 
         //does group 3 match another dice code?
         boolean hasMatches;
@@ -129,6 +125,7 @@ public class Roll
         } catch (NumberFormatException e) {
             // not a valid number, stop.
             val = 0;
+            sum2 = sum;
         }
 
         // build response
@@ -154,7 +151,7 @@ public class Roll
         r.append("`");
 
         // normal chat output
-        return String.format(">> Rolling `%s`\n\n**Result:** %s",
+        return String.format("Rolling `%s`\n\n**Result:** %s",
                 m.group(0), r.toString());
     }
 

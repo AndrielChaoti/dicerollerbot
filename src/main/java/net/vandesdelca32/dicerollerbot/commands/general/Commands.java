@@ -45,6 +45,8 @@ public class Commands
             eb.appendDesc(commandName);
             eb.appendDesc("**\n");
         }
+        String helpUsage = new Help().showUsage();
+        eb.appendDesc("\nFor help on a specific command, use `" + helpUsage + "`");
         //eb.appendDesc("```");
         mb.withEmbed(eb.build());
         mb.withChannel(message.getChannel());

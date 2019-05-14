@@ -28,7 +28,6 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.handle.obj.StatusType;
-import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.PermissionUtils;
 
 public class AnnotationListener {
@@ -73,27 +72,29 @@ public class AnnotationListener {
         String args = "";
         if (cmd.length > 1 && cmd[1] != null) args = cmd[1];
 
-        MessageBuilder resp = new MessageBuilder(event.getClient());
+        StringBuilder response = new StringBuilder();
+        //MessageBuilder resp = new MessageBuilder(event.getClient());
         for (Command command : Main.commands) {
             for (String name : command.names()) {
                 if (cmd[0].equalsIgnoreCase(Main.commandPrefix + name.toLowerCase())) {
                     if (PermissionUtils.hasPermissions(event.getGuild(), event.getAuthor(), command.requiredPerms())) {
                         try {
-                            logger.info("Command {} called by {}", cmd[0], event.getAuthor());
+                            logger.info("Command {} called.", cmd[0]);
                             String result = command.exec(args, event.getMessage());
                             if (result != null && !result.isEmpty()) {
-                                resp.appendContent(result);
+                                response.append(result);
                             }
                         } catch (Exception e) {
-                            resp.appendContent(">> ***Oops!*** Something broke and the command couldn't be completed.\n");
-                            resp.appendContent(e.toString(), MessageBuilder.Styles.CODE);
+                            response.append("Oops, something went horribly wrong while executing your command:");
+                            response.append("```").append(e.toString()).append("```");
                             logger.error("Unhandled exception: ", e);
                         }
                     } else {
-                        resp.appendContent(">> You don't have the permission to do that, " + event.getAuthor().mention());
+                        response.append("You don't have permission to do that.");
                     }
-                    resp.withChannel(event.getChannel());
-                    if (!resp.getContent().isEmpty()) resp.build();
+                    if (!response.toString().isEmpty()) {
+                        Utility.sendChatResponse(response.toString(), event.getMessage(), true);
+                    }
                     return;
                 }
             }

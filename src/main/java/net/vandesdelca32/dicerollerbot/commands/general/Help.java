@@ -53,7 +53,7 @@ public class Help
             if (found) break;
         }
 
-        if (!found) return ">> ❗**Error:** Command \"" + args + "\" not found.";
+        if (!found) return "❗**Error:** Command \"" + args + "\" not found.";
 
         // output help on match
         MessageBuilder mb = new MessageBuilder(client);

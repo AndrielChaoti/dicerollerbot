@@ -35,9 +35,9 @@ public class GameChannel
         IRole gm = guild.getRoleByID(447095868030582784L);
         IRole aspGM = guild.getRoleByID(450181556909375508L);
 
-        if (category == null) return ">> **SERIOUS ERROR**. \"Games\" category could not be found!!!";
-        if (gm == null) return ">> **SERIOUS ERROR**. \"Game Master\" role not found!!!";
-        if (aspGM == null) return ">> **SERIOUS ERROR**. \"Aspiring GM\" role not found!!!";
+        if (category == null) return "**SERIOUS ERROR**. \"Games\" category could not be found!!!";
+        if (gm == null) return "**SERIOUS ERROR**. \"Game Master\" role not found!!!";
+        if (aspGM == null) return "**SERIOUS ERROR**. \"Aspiring GM\" role not found!!!";
 
         String[] channelDetails = args.split("\\n");
         /*
@@ -74,7 +74,9 @@ public class GameChannel
         topic.append(channelDetails[3]);
         if (channelDetails[4].equalsIgnoreCase("fixed")) topic.append(" *(Fixed)*");
 
-        if (!message.getGuild().getChannelsByName(channelDetails[0]).isEmpty()) return ">> A channel by that name already exists.";
+        if (!message.getGuild().getChannelsByName(channelDetails[0]).isEmpty()) {
+            return "A channel by that name already exists.";
+        }
 
         // we have all of the information we need for the channel, create it.
         IChannel gameChannel = category.createChannel(channelDetails[0]);
@@ -92,7 +94,7 @@ public class GameChannel
         hosts.get(0).addRole(gm);
         hosts.get(0).removeRole(aspGM);
 
-        return ">> Channel created and user " + hosts.get(0).mention() + " updated successfully.";
+        return "Channel created and user " + hosts.get(0).mention() + " updated successfully.";
     }
 
     public String usage() {

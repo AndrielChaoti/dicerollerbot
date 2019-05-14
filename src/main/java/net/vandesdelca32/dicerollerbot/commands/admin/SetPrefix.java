@@ -29,11 +29,11 @@ public class SetPrefix implements Command {
 
     @Override
     public String exec(String args, IMessage message) {
-        if (!(message.getAuthor() == client.getApplicationOwner())) return ">> Command can only be run by app owner.";
+        if (!(message.getAuthor() == client.getApplicationOwner())) return "Command can only be run by app owner.";
 
         botConfig.properties.setProperty("chatPrefix", args);
         commandPrefix = args;
-        return ">> Command prefix set to \"" + args + "\"";
+        return "Command prefix set to \"" + args + "\"";
     }
 
     @Override
